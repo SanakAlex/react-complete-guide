@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-// eslint-disable-next-line no-unused-vars
 import logo from './logo.svg';
 import './App.css';
 
@@ -9,20 +8,27 @@ class App extends Component {
 
   state = {
     persons: [
-      {name: "Alex", age:22},
-      {name: "Max", age:23},
-      {name: "Peter", age:13}
-    ]
+      {name: "Alex", age: 22},
+      {name: "Max", age: 23}
+    ],
+    otherState: 'some other value'
   };
 
-  switchNameHandler = () => {
-    // console.log('CLICK!');
+  switchNameHandler = (newName) => {
     this.setState({
       persons: [
-        {name: "Alexey", age:24},
-        {name: "Max", age:23}
-      ],
-      otherState: 'some other value'
+        {name: newName, age: 24},
+        {name: "Max", age: 23}
+      ]
+    })
+  };
+
+  nameChangeHandler= (event) => {
+    this.setState({
+      persons: [
+        {name: "Alex", age: 24},
+        {name: event.target.value, age: 23}
+      ]
     })
   };
 
@@ -30,7 +36,7 @@ class App extends Component {
     return (
         <div className="App">
           <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
+            <img src={logo} className="App-logo" alt="logo"/>
             <p>
               Edit <code>src/App.js</code> and save to reload.
             </p>
@@ -42,15 +48,17 @@ class App extends Component {
             >
               <h1>Learn React is started</h1>
             </a>
-            <button onClick={this.switchNameHandler}>Switch name</button>
-            <Person name={this.state.persons[0].name} age={this.state.persons[0].age}/>
-            <Person name={this.state.persons[1].name} age={this.state.persons[1].age}>My hobby : football</Person>
+            <button onClick={() => this.switchNameHandler('Aleksei')}>Switch name</button>
+            <Person name={this.state.persons[0].name}
+                    age={this.state.persons[0].age}
+                    click={this.switchNameHandler.bind(this, 'Oleksii')}/>
+            <Person name={this.state.persons[1].name}
+                    age={this.state.persons[1].age}
+                    change={this.nameChangeHandler}>My hobby : football</Person>
           </header>
         </div>
     );
   }
-
-  //React.createElement('div', {className: 'App'}, React.createElement('h1', null,'Hello'));
 }
 
 export default App;
